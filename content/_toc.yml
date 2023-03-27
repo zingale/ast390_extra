@@ -4,5 +4,6 @@ parts:
   - caption: Homework
     chapters:
     - file: homework/homework2-makeup
+    - file: homework/homework3-makeup
 
 
