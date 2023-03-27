@@ -26,9 +26,9 @@ jobs:
       run: |
         jupyter-book build --all ./content
 
-    - name: Push _build/html to gh-pages
+    - name: Push to gh-pages
       uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./content/_build/html
-          keep_files: true
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./content/_build/html
+        keep_files: true
