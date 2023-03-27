@@ -1,0 +1,8 @@
+format: jb-book
+root: intro
+parts:
+  - caption: Homework
+    chapters:
+    - file: homework/homework2-makeup
+
+
