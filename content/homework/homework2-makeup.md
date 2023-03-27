@@ -1,4 +1,4 @@
-# Homework 2
+# Homework 2 (make-up)
 
 ```{note}
 You are free to discuss these questions with your classmates and on
