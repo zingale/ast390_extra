@@ -27,10 +27,8 @@ jobs:
         jupyter-book build --all ./content
 
     - name: Push _build/html to gh-pages
-      run: |
-        sudo chown -R $(whoami):$(whoami) .
-        git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
-        git config --global user.name "$GITHUB_ACTOR"
-        git remote set-url origin "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY"
-
-        ghp-import ./content/_build/html -f -p -n
+      uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./content/_build/html
+          keep_files: true
