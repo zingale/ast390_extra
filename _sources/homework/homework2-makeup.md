@@ -10,51 +10,39 @@ derivations, notes, etc.
 ```
 
 
-1. In class we showed how Simpsons rule is derived from fitting a
-   parabola to 3 points and integrating under the parabola.  Our
-   composite method worked for an even number of intervals.  Now we'll
-   consider the case where there is an odd number of intervals.
+1. Consider the  gamma function,
 
-   If $N$ is odd, then we can use the standard composite Simpsons
-   integration method for the first $N-1$ intervals (treating them in
-   pairs).  For the very last interval, we need a new form of Simpsons
-   rule.  Denote the last 3 points in the domain as $x_{N-2}$,
-   $x_{N-1}$, $x_N$&mdash;we want to do the final integration over $x
-   \in [x_{N-1}, x_N]$.
+   $$\Gamma(a) = \int_0^\infty x^{a-1} e^{-x} dx$$
 
-   a. Construct the form of the integral in this case by using the
-      same parabolic interpolant, and evalute it by integrating only
-      over $[x_{N-1}, x_N]$.
+   We want to evaluate this numerically.  Consider a variable 
+   transformation of the form:
 
-   b. Write a general composite Simpsons rule integrator that works for
-      even or odd $N$ (you can start with the code from class).
+   $$z = \frac{x}{x + c}$$
 
-   c. Integrate
-        
-      $$I = \int_0^5 x \sin(2\pi x) dx$$
+   as we saw in class.  This will map $x \in [0, \infty)$ to $z \in
+   [0, 1]$, allowing us to do this integral numerically in terms of
+   $z$.
 
-      from $[0, 5]$ using $N = \{3, 5, 9, 17, 33\}$ and compute the error compared
-      to the analytic solution,
+   For convenience, we express the integrand as $\phi(x) = x^{a-1} e^{-x}$.  
 
-      $$I_\mathrm{analytic} = -\frac{5}{2\pi}$$
+   * For what value of $x$ is the integrand $\phi(x)$ maximum?
 
-      How does the error converge?
+   * Choose the value $c$ in our transformation such that the 
+     peak of the integrand occurs at $z = 1/2$---what value is $c$?
 
-2. The particles in an ideal gas a well-described by the Maxwell-Boltzmann distribution:
+     This choice spreads the interesting regions of integrand over
+     the domain $z \in [0,1]$, making our numerical integration 
+     more accurate.
 
-   $$n(p) d^3 p \rightarrow 4\pi n(p) p^2 dp = \frac{n_I}{(2\pi m_I k_B T)^{3/2}} e^{-p^2/(2m_I k_BT)} 4\pi p^2 dp$$
+   * Find $\Gamma(a)$ for a few different value of $a$ using and
+     numerical integration method you wish, integrating from $z = 0$ to
+     $z = 1$.  Keep the number of points in your quadrature to a
+     reasonable amount ($N \lesssim 50$).
 
-   The average velocity of this distribution, defined as:
+     Don't forget to include the factors you pick up when changing
+     $dx$ to $dz$.
 
-   $$\langle v \rangle = \frac{1}{n_I} \int_0^\infty 4\pi n(p) p^2 \left (\frac{p}{m_I}\right ) dp$$
+     Note that roundoff error may come into play in the integrand.
+     Recognizing that you can write $x^{a-1} = e^{(a-1)\ln{x}}$ can
+     help minimize this.
 
-   Evaluate this integral numerically for a gas of protons ($m_I = m_p)$ and the conditions
-   in the center of the Sun ($T = 1.5\times 10^7~\mathrm{K}$).
-
-   Your integral should agree with the analytic result:
-
-   $$\langle v \rangle = 2 \sqrt{\frac{2k_B T}{\pi m_I}}$$
-
-   Be sure to vary the number of intervals in your numerical
-   integration to show that you get an accurate answer (i.e., you
-   converge).

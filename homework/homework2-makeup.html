@@ -361,44 +361,36 @@ own source code.</p>
 derivations, notes, etc.</p>
 </div>
 <ol class="arabic">
-<li><p>In class we showed how Simpsons rule is derived from fitting a
-parabola to 3 points and integrating under the parabola.  Our
-composite method worked for an even number of intervals.  Now we’ll
-consider the case where there is an odd number of intervals.</p>
-<p>If <span class="math notranslate nohighlight">\(N\)</span> is odd, then we can use the standard composite Simpsons
-integration method for the first <span class="math notranslate nohighlight">\(N-1\)</span> intervals (treating them in
-pairs).  For the very last interval, we need a new form of Simpsons
-rule.  Denote the last 3 points in the domain as <span class="math notranslate nohighlight">\(x_{N-2}\)</span>,
-<span class="math notranslate nohighlight">\(x_{N-1}\)</span>, <span class="math notranslate nohighlight">\(x_N\)</span>—we want to do the final integration over <span class="math notranslate nohighlight">\(x
-\in [x_{N-1}, x_N]\)</span>.</p>
-<p>a. Construct the form of the integral in this case by using the
-same parabolic interpolant, and evalute it by integrating only
-over <span class="math notranslate nohighlight">\([x_{N-1}, x_N]\)</span>.</p>
-<p>b. Write a general composite Simpsons rule integrator that works for
-even or odd <span class="math notranslate nohighlight">\(N\)</span> (you can start with the code from class).</p>
-<p>c. Integrate</p>
+<li><p>Consider the  gamma function,</p>
 <div class="math notranslate nohighlight">
-\[I = \int_0^5 x \sin(2\pi x) dx\]</div>
-<p>from <span class="math notranslate nohighlight">\([0, 5]\)</span> using <span class="math notranslate nohighlight">\(N = \{3, 5, 9, 17, 33\}\)</span> and compute the error compared
-to the analytic solution,</p>
+\[\Gamma(a) = \int_0^\infty x^{a-1} e^{-x} dx\]</div>
+<p>We want to evaluate this numerically.  Consider a variable
+transformation of the form:</p>
 <div class="math notranslate nohighlight">
-\[I_\mathrm{analytic} = -\frac{5}{2\pi}\]</div>
-<p>How does the error converge?</p>
+\[z = \frac{x}{x + c}\]</div>
+<p>as we saw in class.  This will map <span class="math notranslate nohighlight">\(x \in [0, \infty)\)</span> to <span class="math notranslate nohighlight">\(z \in
+[0, 1]\)</span>, allowing us to do this integral numerically in terms of
+<span class="math notranslate nohighlight">\(z\)</span>.</p>
+<p>For convenience, we express the integrand as <span class="math notranslate nohighlight">\(\phi(x) = x^{a-1} e^{-x}\)</span>.</p>
+<ul>
+<li><p>For what value of <span class="math notranslate nohighlight">\(x\)</span> is the integrand <span class="math notranslate nohighlight">\(\phi(x)\)</span> maximum?</p></li>
+<li><p>Choose the value <span class="math notranslate nohighlight">\(c\)</span> in our transformation such that the
+peak of the integrand occurs at <span class="math notranslate nohighlight">\(z = 1/2\)</span>—what value is <span class="math notranslate nohighlight">\(c\)</span>?</p>
+<p>This choice spreads the interesting regions of integrand over
+the domain <span class="math notranslate nohighlight">\(z \in [0,1]\)</span>, making our numerical integration
+more accurate.</p>
 </li>
-<li><p>The particles in an ideal gas a well-described by the Maxwell-Boltzmann distribution:</p>
-<div class="math notranslate nohighlight">
-\[n(p) d^3 p \rightarrow 4\pi n(p) p^2 dp = \frac{n_I}{(2\pi m_I k_B T)^{3/2}} e^{-p^2/(2m_I k_BT)} 4\pi p^2 dp\]</div>
-<p>The average velocity of this distribution, defined as:</p>
-<div class="math notranslate nohighlight">
-\[\langle v \rangle = \frac{1}{n_I} \int_0^\infty 4\pi n(p) p^2 \left (\frac{p}{m_I}\right ) dp\]</div>
-<p>Evaluate this integral numerically for a gas of protons (<span class="math notranslate nohighlight">\(m_I = m_p)\)</span> and the conditions
-in the center of the Sun (<span class="math notranslate nohighlight">\(T = 1.5\times 10^7~\mathrm{K}\)</span>).</p>
-<p>Your integral should agree with the analytic result:</p>
-<div class="math notranslate nohighlight">
-\[\langle v \rangle = 2 \sqrt{\frac{2k_B T}{\pi m_I}}\]</div>
-<p>Be sure to vary the number of intervals in your numerical
-integration to show that you get an accurate answer (i.e., you
-converge).</p>
+<li><p>Find <span class="math notranslate nohighlight">\(\Gamma(a)\)</span> for a few different value of <span class="math notranslate nohighlight">\(a\)</span> using and
+numerical integration method you wish, integrating from <span class="math notranslate nohighlight">\(z = 0\)</span> to
+<span class="math notranslate nohighlight">\(z = 1\)</span>.  Keep the number of points in your quadrature to a
+reasonable amount (<span class="math notranslate nohighlight">\(N \lesssim 50\)</span>).</p>
+<p>Don’t forget to include the factors you pick up when changing
+<span class="math notranslate nohighlight">\(dx\)</span> to <span class="math notranslate nohighlight">\(dz\)</span>.</p>
+<p>Note that roundoff error may come into play in the integrand.
+Recognizing that you can write <span class="math notranslate nohighlight">\(x^{a-1} = e^{(a-1)\ln{x}}\)</span> can
+help minimize this.</p>
+</li>
+</ul>
 </li>
 </ol>
 </section>
